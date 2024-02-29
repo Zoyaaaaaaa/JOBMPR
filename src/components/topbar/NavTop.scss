@@ -1,0 +1,17 @@
+.navbar {
+    background-color: white !important;
+    height: 100px;
+    .job-search {
+      font-weight: bold;
+      margin-right: auto; /* Pushes the JobSearch to the left */
+    }
+  
+    .navbar-collapse {
+        color: black;
+        font-size: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  
