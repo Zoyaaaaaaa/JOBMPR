@@ -9,14 +9,15 @@ function NavTop() {
     <Navbar bg="light" variant="light" expand="lg">
       <Container>
         <Navbar.Brand href="#home">
-          <h1 className="job-search">JobSearch</h1>
+          <h1 className="job-search">CareerCrafter</h1>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-center">
           <Nav>
             <Nav.Link as={Link} to="/">Find Job</Nav.Link>
-            <Nav.Link as={Link} to="/register">Companies</Nav.Link>
-            <Nav.Link as={Link} to="/">Upload Job</Nav.Link>
+            <Nav.Link as={Link} to="/">My Jobs</Nav.Link>
+            <Nav.Link as={Link} to="/jobs">Companies</Nav.Link>
+            <Nav.Link as={Link} to="/uploadjob">Upload Job</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

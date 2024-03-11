@@ -1,0 +1,61 @@
+$form-background: #fff;
+$form-border: 1px solid #ddd;
+$form-padding: 30px;
+$label-margin-bottom: 15px;
+$input-margin-bottom: 20px;
+$button-background: #5cb85c;
+$button-color: #fff;
+
+form {
+  background: $form-background;
+  border-radius: 15px;
+  border: $form-border;
+  padding: $form-padding;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s, box-shadow 0.3s;
+
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+  }
+
+  label {
+    margin-bottom: $label-margin-bottom;
+    display: block;
+    font-weight: bold;
+  }
+
+  input,
+  textarea,
+  select {
+    width: 100%;
+    padding: 12px;
+    border: $form-border;
+    border-radius: 8px;
+    margin-bottom: $input-margin-bottom;
+    transition: border-color 0.3s, transform 0.3s;
+
+    &:focus {
+      outline: none;
+      border-color: #5cb85c;
+      transform: scale(1.02);
+    }
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    background: $button-background;
+    color: $button-color;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+
+    &:hover {
+      background: #4cae4c;
+      transform: scale(1.05);
+    }
+  }
+}

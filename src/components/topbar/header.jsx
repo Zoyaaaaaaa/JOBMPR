@@ -1,82 +1,55 @@
-// import { useState } from 'react';
-// import Carousel from 'react-bootstrap/Carousel';
-// import ExampleCarouselImage from 'components/ExampleCarouselImage';
-
-// function Header() {
-//   const [index, setIndex] = useState(0);
-   
-// const images = [
-//     'https://img.freepik.com/free-vector/tiny-people-searching-business-opportunities_74855-19928.jpg',
-//     'https://th.bing.com/th/id/R.452134324761cba5c00c83a1d69fb520?rik=03zE6V1vIhOP6w&riu=http%3a%2f%2fimages.huffingtonpost.com%2f2016-08-12-1471031429-2271495-dreamjobaheadconcepts.jpg&ehk=nUvB4d5gjG0irvd5kdNa6CeDUYixCLigaZ3BMZT5tC8%3d&risl=&pid=ImgRaw&r=0',
-//     // Add more image URLs as needed
-//   ];
-//   const handleSelect = (selectedIndex) => {
-//     setIndex(selectedIndex);
-//   };
-
-//   return (
-//     <Carousel activeIndex={index} onSelect={handleSelect}>
-//       <Carousel.Item>
-//         <ExampleCarouselImage text="First slide" />
-//         <Carousel.Caption>
-//           <h3>First slide label</h3>
-//           <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-//         </Carousel.Caption>
-//       </Carousel.Item>
-//       <Carousel.Item>
-//         <ExampleCarouselImage text="Second slide" />
-//         <Carousel.Caption>
-//           <h3>Second slide label</h3>
-//           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-//         </Carousel.Caption>
-//       </Carousel.Item>
-//       <Carousel.Item>
-//         <ExampleCarouselImage text="Third slide" />
-//         <Carousel.Caption>
-//           <h3>Third slide label</h3>
-//           <p>
-//             Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-//           </p>
-//         </Carousel.Caption>
-//       </Carousel.Item>
-//     </Carousel>
-//   );
-// }
-
-// export default Header;
-import React, { useState } from 'react';
+import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 
-function Header() {
-  const [index, setIndex] = useState(0);
-
-  const images = [
-    'https://img.freepik.com/free-vector/tiny-people-searching-business-opportunities_74855-19928.jpg',
-    'https://th.bing.com/th/id/R.452134324761cba5c00c83a1d69fb520?rik=03zE6V1vIhOP6w&riu=http%3a%2f%2fimages.huffingtonpost.com%2f2016-08-12-1471031429-2271495-dreamjobaheadconcepts.jpg&ehk=nUvB4d5gjG0irvd5kdNa6CeDUYixCLigaZ3BMZT5tC8%3d&risl=&pid=ImgRaw&r=0',
-    // Add more image URLs as needed
-  ];
-
-  const handleSelect = (selectedIndex) => {
-    setIndex(selectedIndex);
-  };
+function JobPortalCarousel() {
+  // const carouselContainerStyle = {
+  //   height: '250px',  // Adjust the height according to your requirements
+  //   background: '#f0f0f0',  // Set your desired background color
+  //   display: 'flex',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   marginBottom:'19rem',
+  // };
 
   return (
-    <Carousel activeIndex={index} onSelect={handleSelect}>
-      {images.map((image, idx) => (
-        <Carousel.Item key={idx}>
+    // <div className='carousel-container' style={carouselContainerStyle}>
+      <Carousel style={{ width: '100%' }}>
+        <Carousel.Item>
           <img
             className="d-block w-100"
-            src={image}
-            alt={`Slide ${idx + 1}`}
+            src="/images/job3.jfif"
+            alt="Your Dream Job Awaits"
           />
           <Carousel.Caption>
-            <h3>{`Slide ${idx + 1} label`}</h3>
-            <p>Where ooprtunities meet talent!</p>
+            <h3>Your Dream Job Awaits</h3>
+            <p>Explore exciting opportunities from top companies.</p>
           </Carousel.Caption>
         </Carousel.Item>
-      ))}
-    </Carousel>
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            src="/images/job4.jpg"
+            alt="Find the Perfect Match"
+          />
+          <Carousel.Caption>
+            <h3>Find the Perfect Match</h3>
+            <p>Discover jobs that match your skills and interests.</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            src="/images/job2.jfif"
+            alt="Build Your Career"
+          />
+          <Carousel.Caption>
+            <h3>Build Your Career</h3>
+            <p>Take the next step in your professional journey.</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+      </Carousel>
+    // </div>
   );
 }
 
-export default Header;
+export default JobPortalCarousel;

@@ -1,0 +1,44 @@
+/* jobcard.scss */
+
+.cards {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  a{
+    text-decoration: none;
+  }
+  
+  .job-card {
+    width: 18rem;
+    margin: 1rem;
+    transition: transform 0.3s ease-in-out;
+  
+    &:hover {
+      transform: scale(1.05); 
+    }
+  
+    .card-img {
+      height: 150px; 
+      object-fit: contain; 
+    }
+  
+    .card-body {
+      padding: 1.5rem;
+    }
+  
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+  
+    .card-subtitle {
+      color: #6c757d;
+    }
+  
+    .card-text {
+      margin-top: 0.5rem;
+    }
+  }
+  

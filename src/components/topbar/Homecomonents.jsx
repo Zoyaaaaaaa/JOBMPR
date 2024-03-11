@@ -1,25 +1,38 @@
-import React from 'react'
-
-
-
+import React, { useState, useEffect } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css" 
 import NavTop from './NavTop'
-import Search from './SearchBar'
+import SearchBar from './SearchBar'
 import JobCard from '../../jobcard/jobcard'
-// import JobDescription from './jobDetails'
+import Header from "../topbar/header"
+import FilterList from '../../Filter';
 function HomeComponent() {
+  const [jobs, setJobs] = useState([]);
+
+  // Fetch jobs data
+  useEffect(() => {
+    fetch("jobs.json")
+      .then(res => res.json())
+      .then(data => {
+        setJobs(data);
+      });
+  }, []);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Implement your submit logic here
+    console.log('Form submitted');
+  };
+
   return (
     <div>
-      {/* <Topbar/> */}
-      <NavTop/>
-      <Search></Search>
-       <JobCard/>
-       {/* <div className='home-component'>
-           <PostStatus />
-       </div> */}
-       {/* <JobDescription/> */}
+      <NavTop />
+      <Header/>
+      <SearchBar jobs={jobs} />
+      {/* <FilterList/> */}
+      {/* <JobCard /> */}
+      
     </div>
-  )
+  );
 }
 
-export default HomeComponent
+export default HomeComponent;
