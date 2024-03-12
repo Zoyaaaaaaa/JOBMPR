@@ -1,0 +1,34 @@
+.topbar-main{
+    width: 100%;
+    height: 50px;
+    background-color:#3a5f3a ;
+//#82d682
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo{
+    width: 50px;
+    margin-left: 10px;
+}
+.react-icons{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 30%;
+    margin-right: 50px;
+}
+
+.react-icon{
+    cursor: pointer;
+}
+
+.react-icon:hover {
+    color: #82d682;
+}
+.user{
+    border-radius: 50%;
+    height: 36px;
+}

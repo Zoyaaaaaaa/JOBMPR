@@ -1,0 +1,61 @@
+.login-wrapper {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f0f0; /* light gray background */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* subtle shadow */
+  
+    h1 {
+      text-align: center;
+      color: #006400; /* dark green */
+      margin-bottom: 20px;
+    }
+  
+    .auth-input {
+      input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #333;
+      }
+  
+      .common-input::placeholder {
+        color: #999; /* light gray */
+      }
+  
+      .loginButton {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #006400; /* dark green */
+        color: #fff; /* white */
+        font-size: 16px;
+        cursor: pointer;
+  
+        &:hover {
+          background-color: #004d00; /* darker green on hover */
+        }
+      }
+  
+      h3 {
+        text-align: center;
+        margin-top: 20px;
+        color: #006400; /* dark green */
+  
+        span {
+          color: #006400; /* dark green */
+          cursor: pointer;
+  
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+  
