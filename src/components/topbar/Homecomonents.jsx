@@ -5,6 +5,7 @@ import SearchBar from './SearchBar'
 import JobCard from '../../jobcard/jobcard'
 import Header from "../topbar/header"
 import FilterList from '../../Filter';
+import Footer from './Footer';
 function HomeComponent() {
   const [jobs, setJobs] = useState([]);
 
@@ -28,7 +29,7 @@ function HomeComponent() {
       <NavTop />
       <Header/>
       <SearchBar jobs={jobs} />
-      {/* <FilterList/> */}
+     <Footer/>
       {/* <JobCard /> */}
       
     </div>

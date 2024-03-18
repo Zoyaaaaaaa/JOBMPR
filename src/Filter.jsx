@@ -6,50 +6,51 @@ import Button from 'react-bootstrap/Button';
 const FilterList = () => {
   const [filters, setFilters] = useState({
     experienceLevel: '',
-    employmentType: '',
-    jobLocation: '',
-    salaryRange: { min: '', max: '' },
+    employmentType: ''
   });
   const [jobData, setJobData] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
 
   const fetchJobs = async () => {
     try {
-      const response = await fetch("./jobs.json");
-      const data = await response.json();
-      setJobData(data);
+      const firebaseResponse = await fetch('https://job-portal-abdc9-default-rtdb.firebaseio.com/Jobsdata.json');
+      const firebaseData = await firebaseResponse.json();
+
+      const firebaseJobsArray = firebaseData ? Object.values(firebaseData) : [];
+
+      setJobData(firebaseJobsArray);
     } catch (error) {
       console.error('Error fetching jobs:', error);
     }
   };
 
+  const filterJobs = () => {
+    let filtered = jobData;
+  
+    if (filters.experienceLevel) {
+      filtered = filtered.filter(job => job.experienceLevel === filters.experienceLevel);
+    }
+  
+    if (filters.employmentType) {
+      filtered = filtered.filter(job => job.employmentType === filters.employmentType);
+    }
+  
+    console.log("Matching filtered jobs:", filtered);
+    setFilteredJobs(filtered);
+  };
+  
   useEffect(() => {
     fetchJobs();
   }, []);
 
   useEffect(() => {
-    const updatedFilteredJobs = jobData.filter(job => (
-      (filters.experienceLevel === '' || job.experienceLevel === filters.experienceLevel) &&
-      (filters.employmentType === '' || job.employmentType === filters.employmentType) &&
-      (filters.jobLocation === '' || job.jobLocation === filters.jobLocation) &&
-      (filters.salaryRange.min === '' || parseInt(job.minPrice, 10) >= parseInt(filters.salaryRange.min, 10)) &&
-      (filters.salaryRange.max === '' || parseInt(job.maxPrice, 10) <= parseInt(filters.salaryRange.max, 10))
-    ));
-    setFilteredJobs(updatedFilteredJobs);
+    filterJobs();
   }, [filters, jobData]);
 
   const handleFilterChange = (filterType, value) => {
     setFilters(prevFilters => ({ ...prevFilters, [filterType]: value }));
   };
-
-  const handleSalaryRangeChange = ({ min, max }) => {
-    setFilters(prevFilters => ({ ...prevFilters, salaryRange: { min, max } }));
-  };
-
-  const applyFilters = () => {
-    console.log('Applying Filters:', filters);
-    // Add your logic to update UI or perform other actions based on filters
-  };
+  
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -61,10 +62,9 @@ const FilterList = () => {
             <option value="">Any</option>
             <option value="Internship">Internship</option>
             <option value="Senior">Senior</option>
-            <option value="All">All</option>
+            <option value="Junior">Junior</option>
           </Form.Control>
         </Form.Group>
-
         <Form.Group controlId="employmentType">
           <Form.Label>Employment Type</Form.Label>
           <Form.Control as="select" value={filters.employmentType} onChange={(e) => handleFilterChange('employmentType', e.target.value)}>
@@ -73,35 +73,22 @@ const FilterList = () => {
             <option value="Full-time">Full-time</option>
           </Form.Control>
         </Form.Group>
-
-        {/* Use RangeExample component for salary range */}
-        <RangeExample onSalaryRangeChange={handleSalaryRangeChange} />
-
-        {/* Apply Filters button */}
         <Button
           style={{ width: '100%', marginTop: '20px' }}
           variant="primary"
-          onClick={applyFilters}
+          onClick={filterJobs}
         >
           Apply Filters
         </Button>
       </div>
+      <div style={{ marginLeft: '20px' }}>
+  {filteredJobs.map(job => (
+    <JobCard key={job.id} job={job} />
+  ))}
+</div>
+
     </div>
   );
 };
-
-function RangeExample({ onSalaryRangeChange }) {
-  const handleRangeChange = (e) => {
-    const [min, max] = e.target.value.split('-');
-    onSalaryRangeChange({ min, max });
-  };
-
-  return (
-    <Form.Group controlId="salaryRange">
-      <Form.Label>Salary Range</Form.Label>
-      <Form.Control type="range" onChange={handleRangeChange} />
-    </Form.Group>
-  );
-}
 
 export default FilterList;

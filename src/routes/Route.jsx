@@ -8,6 +8,7 @@ import JobList from "../jobcard/jobcard";
 import FilterList from "../Filter";
 import JobApplicationForm from "../jobApplication";
 import Uploadjob from "../uploadjobs/uploadjob";
+import Resume from '../components/topbar/pages/Card/Resume/ResumPage'
   const router = createBrowserRouter([
     {
       path: "/",
@@ -30,8 +31,13 @@ import Uploadjob from "../uploadjobs/uploadjob";
       element:  <JobApplicationForm />,
     },
     {
-      path: "/jobs/:jobId",
+      path: "/jobs/:id",
       element:  <JobDescription />,
+
+    },
+    {
+      path: "/Resume",
+      element:  <Resume />,
 
     },
   ]);  

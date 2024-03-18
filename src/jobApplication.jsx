@@ -6,6 +6,9 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import * as formik from 'formik';
 import * as yup from 'yup';
+import { firestore } from '../firebaseConfig';
+import './JobApplicationForm.scss';
+
 
 function JobApplicationForm() {
   const { Formik } = formik;
@@ -18,6 +21,16 @@ function JobApplicationForm() {
     coverLetter: yup.string().required(),
     agreeTerms: yup.bool().required().oneOf([true], 'Terms must be accepted'),
   });
+  const handleSubmit = async (values) => {
+    try {
+      // Save data to Firestore
+      await firestore.collection('jobApplications').add(values);
+
+      console.log('Job application submitted successfully to Firestore!');
+    } catch (error) {
+      console.error('Failed to submit job application to Firestore:', error.message);
+    }
+  };
 
   return (
     <Formik
@@ -76,7 +89,7 @@ function JobApplicationForm() {
             <Form.Group as={Col} md="6" controlId="validationFormik04">
               <Form.Label>Resume (URL or file)</Form.Label>
               <InputGroup hasValidation>
-                <Form.Control
+                {/* <Form.Control
                   type="file"
                   name="resume"
                   onChange={(event) => {
@@ -87,7 +100,19 @@ function JobApplicationForm() {
                   }}
                   isInvalid={!!errors.resume}
                   custom
-                />
+                /> */}
+<Form.Control
+type="file"
+name="resume"
+onChange={(event) => {
+handleChange(event);
+// For displaying the selected file name (optional)
+const fileName = event.currentTarget.files[0]?.name || '';
+document.getElementById('file-name').innerText = fileName;
+}}
+isInvalid={!!errors.resume}
+custom="true" 
+/>
                 <Form.Control.Feedback type="invalid">
                   {errors.resume}
                 </Form.Control.Feedback>
@@ -125,7 +150,7 @@ function JobApplicationForm() {
             />
           </Form.Group>
 
-          <Button type="submit">Submit Application</Button>
+          <Button type="submit" onClick={handleSubmit} >Submit Application</Button>
         </Form>
       )}
     </Formik>

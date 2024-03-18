@@ -2,7 +2,9 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import Button from 'react-bootstrap/Button';
-import "./uploadjob.scss"
+import { useFormikContext } from 'formik';
+import "./uploadjob.scss";
+
 const UploadJob = () => {
   const validationSchema = yup.object().shape({
     companyName: yup.string().required('Company Name is required'),
@@ -49,9 +51,9 @@ const UploadJob = () => {
     await postData(formData);
     setSubmitting(false);
   };
+
   const postData = async (formData) => {
     try {
-      // Making the fetch request to your server
       const response = await fetch('http://localhost:5173/uploadjob', {
         method: 'POST',
         body: formData,
@@ -66,38 +68,42 @@ const UploadJob = () => {
       console.error('Error during fetch:', error);
     }
   };
-  const handleFileChange = (event, setFieldValue) => {
-    const file = event.currentTarget.files[0];
-    setFieldValue('companyLogo', file);
-  };
-  const getData = async (e, values) => {
-    e.preventDefault();
-  
+
+  const MySubmitButton = () => {
+    const formik = useFormikContext();
+
+    const onClickHandler = async (e) => {
+      e.preventDefault();
+      const jsonData = JSON.stringify(formik.values);
+      console.log(jsonData);
     
-    const jsonData = JSON.stringify(values);
-   console.log(jsonData);
-   
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json', 
-      },
-      body: jsonData,
-    };
-  
-    try {
-      // Making the fetch request 
-      const response = await fetch('https://job-portal-abdc9-default-rtdb.firebaseio.com/Jobsdata.json', options);
-  
-      if (response.ok) {
-        console.log('Data successfully saved to Firebase!');
-      } else {
-        console.error('Failed to save data to Firebase:', response.statusText);
+      try {
+        const response = await fetch('https://job-portal-abdc9-default-rtdb.firebaseio.com/Jobsdata.json', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: jsonData,
+        });
+    
+        if (response.ok) {
+          console.log('Data successfully saved to Firebase!');
+        } else {
+          console.error('Failed to save data to Firebase:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error during fetch:', error);
       }
-    } catch (error) {
-      console.error('Error during fetch:', error);
-    }
+    };
+    
+
+    return (
+      <Button type="submit" disabled={formik.isSubmitting} onClick={onClickHandler}>
+        Submit
+      </Button>
+    );
   };
+
   return (
     <Formik
       initialValues={initialValues}
@@ -171,9 +177,7 @@ const UploadJob = () => {
             <Field as="textarea" name="qualifications" />
           </label>
 
-          <Button type="submit" disabled={isSubmitting} onClick={(e) => getData(e, initialValues)}>
-            Submit
-          </Button>
+          <MySubmitButton />
         </Form>
       )}
     </Formik>

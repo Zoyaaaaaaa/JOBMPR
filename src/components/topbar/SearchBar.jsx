@@ -1,35 +1,68 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SearchBar.scss'; 
 import JobCard from '../../jobcard/jobcard'; 
+import { fetchJobsFromFirestore } from '../../../firebaseConfig'; 
 
-function SearchBar({ jobs }) {
+function SearchBar() {
   const [jobLocation, setJobLocation] = useState('');
   const [jobTitle, setJobTitle] = useState('');
+  const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
+  async function fetchData() {
+    try {
+      const fetchedJobs = await fetchJobsFromFirestore();
+      console.log('Fetched jobs:', fetchedJobs); 
+      setJobs(fetchedJobs);
+      setFilteredJobs(fetchedJobs);
+    } catch (error) {
+      console.error('Error fetching jobs:', error);
+    }
+  }
+  
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const fetchedJobs = await fetchJobsFromFirestore();
+        console.log('Fetched jobs:', fetchedJobs); 
+        setJobs(fetchedJobs);
+        setFilteredJobs(fetchedJobs);
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+      }
+    }
+  
+    fetchData(); 
+  }, []);
+  
 
   const handleLocationChange = (event) => {
     const newValue = event.target.value;
     setJobLocation(newValue);
-    console.log('Location:', newValue);
   };
 
   const handleJobTypeChange = (event) => {
     const newValue = event.target.value;
     setJobTitle(newValue);
-    console.log('Job Type:', newValue);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();  
-    const filteredJobs = jobs.filter(job =>
-      job.jobLocation.toLowerCase().includes(jobLocation.toLowerCase()) &&
-      job.jobTitle.toLowerCase().includes(jobTitle.toLowerCase())
-    );
-
-    console.log('Filtered Jobs:', filteredJobs);
-    setFilteredJobs(filteredJobs); 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+  
+    try {
+      const updatedFilteredJobs = jobs.filter(job =>
+        job.jobLocation.toLowerCase().includes(jobLocation.toLowerCase()) &&
+        job.jobTitle.toLowerCase().includes(jobTitle.toLowerCase())
+      );
+  
+      console.log('Filtered jobs:', updatedFilteredJobs); 
+  
+      setFilteredJobs(updatedFilteredJobs);
+    } catch (error) {
+      console.error('Error filtering jobs:', error);
+    }
   };
+  
 
   return (
     <>
@@ -52,18 +85,15 @@ function SearchBar({ jobs }) {
         <button type="submit" className="search-button">Search</button>
       </form>
 
-      {/* Display filtered job cards */}
-    {/* Display filtered job cards */}
-<div className="job-cards-container">
-  {filteredJobs.length > 0 ? (
-    filteredJobs.map((job) => (
-      <JobCard key={job.jobLocation} job={job} />
-    ))
-  ) : (
-    <p>No matching jobs found</p>
-  )}
-</div>
-
+      <div className="job-cards-container">
+        {filteredJobs.length > 0 ? (
+          filteredJobs.map((job, index) => (
+            <JobCard key={index} job={job} />
+          ))
+        ) : (
+          <p>No matching jobs found</p>
+        )}
+      </div>
     </>
   );
 }
